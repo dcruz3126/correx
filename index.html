@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Correx Systems — Commission Reconciliation for Insurance Brokerages</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #0C3877;
+    --blue: #1E4B82;
+    --gold: #F7C613;
+    --light-gray: #d9d9d9;
+    --off-white: #ededed;
+    --text-dark: #0f1923;
+    --text-mid: #3a4a5c;
+    --text-muted: #6b7a8d;
+    --font: 'Georgia', 'Times New Roman', serif;
+    --font-sans: 'Helvetica Neue', 'Arial', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-sans);
+    color: var(--text-dark);
+    background: #fff;
+    line-height: 1.6;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    background: var(--navy);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .nav-brand {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: rgba(255,255,255,0.72);
+    text-decoration: none;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: #fff; }
+
+  .nav-cta {
+    background: var(--gold);
+    color: var(--navy) !important;
+    padding: 7px 16px;
+    border-radius: 2px;
+    font-weight: 600 !important;
+    font-size: 13px !important;
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    background: var(--navy);
+    color: #fff;
+    padding: 6rem 2rem 5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--gold);
+  }
+
+  .hero-eyebrow {
+    font-family: var(--font-sans);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-statement {
+    font-family: var(--font);
+    font-size: clamp(2rem, 5vw, 3.25rem);
+    font-weight: normal;
+    line-height: 1.2;
+    max-width: 780px;
+    margin: 0 auto 1.5rem;
+    letter-spacing: -0.01em;
+  }
+
+  .hero-statement em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .hero-tagline {
+    font-size: 17px;
+    color: rgba(255,255,255,0.7);
+    max-width: 520px;
+    margin: 0 auto 2.5rem;
+    font-family: var(--font-sans);
+    font-weight: 400;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: var(--gold);
+    color: var(--navy);
+    border: none;
+    padding: 13px 28px;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 2px;
+    font-family: var(--font-sans);
+    transition: background 0.2s, transform 0.1s;
+  }
+
+  .btn-primary:hover { background: #e6b800; transform: translateY(-1px); }
+
+  .btn-ghost {
+    background: transparent;
+    color: rgba(255,255,255,0.85);
+    border: 1px solid rgba(255,255,255,0.3);
+    padding: 13px 28px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 2px;
+    font-family: var(--font-sans);
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .btn-ghost:hover { border-color: rgba(255,255,255,0.6); color: #fff; }
+
+  /* ─── SECTIONS ─── */
+  section {
+    padding: 5rem 2rem;
+  }
+
+  .section-inner {
+    max-width: 980px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-family: var(--font-sans);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+
+  .section-heading {
+    font-family: var(--font);
+    font-size: clamp(1.6rem, 3vw, 2.1rem);
+    font-weight: normal;
+    color: var(--navy);
+    line-height: 1.25;
+    margin-bottom: 1rem;
+  }
+
+  .section-intro {
+    font-size: 17px;
+    color: var(--text-mid);
+    max-width: 640px;
+    line-height: 1.7;
+    margin-bottom: 3rem;
+  }
+
+  /* ─── PROBLEM ─── */
+  .problem-section {
+    background: var(--off-white);
+    border-top: 1px solid var(--light-gray);
+    border-bottom: 1px solid var(--light-gray);
+  }
+
+  .problem-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.25rem;
+    margin-top: 2.5rem;
+  }
+
+  .problem-card {
+    background: #fff;
+    border: 1px solid var(--light-gray);
+    border-top: 3px solid var(--blue);
+    padding: 1.5rem 1.5rem 1.75rem;
+    border-radius: 0;
+  }
+
+  .problem-card-icon {
+    width: 32px;
+    height: 32px;
+    background: var(--navy);
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+  }
+
+  .problem-card-icon svg {
+    width: 16px;
+    height: 16px;
+    fill: none;
+    stroke: var(--gold);
+    stroke-width: 1.75;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .problem-card h3 {
+    font-family: var(--font-sans);
+    font-size: 13.5px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    color: var(--navy);
+    margin-bottom: 0.6rem;
+    text-transform: uppercase;
+  }
+
+  .problem-card p {
+    font-size: 14.5px;
+    color: var(--text-mid);
+    line-height: 1.65;
+  }
+
+  /* ─── WHAT WE DO ─── */
+  .what-section {
+    background: #fff;
+  }
+
+  .what-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .what-copy p {
+    font-size: 16px;
+    color: var(--text-mid);
+    line-height: 1.75;
+    margin-bottom: 1rem;
+  }
+
+  .what-copy p:last-child { margin-bottom: 0; }
+
+  .what-highlights {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .highlight-item {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    padding: 1.1rem 1.25rem;
+    background: var(--off-white);
+    border-left: 3px solid var(--gold);
+  }
+
+  .highlight-num {
+    font-family: var(--font);
+    font-size: 22px;
+    color: var(--blue);
+    font-weight: normal;
+    line-height: 1;
+    min-width: 28px;
+    padding-top: 2px;
+  }
+
+  .highlight-text {
+    font-size: 14px;
+    color: var(--text-dark);
+    line-height: 1.55;
+  }
+
+  .highlight-text strong {
+    display: block;
+    font-weight: 600;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--navy);
+    margin-bottom: 3px;
+  }
+
+  /* ─── WHO IT'S FOR ─── */
+  .who-section {
+    background: var(--navy);
+    color: #fff;
+    padding: 4rem 2rem;
+  }
+
+  .who-inner {
+    max-width: 980px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  .who-label {
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+
+  .who-statement {
+    font-family: var(--font);
+    font-size: clamp(1.4rem, 2.5vw, 1.85rem);
+    font-weight: normal;
+    line-height: 1.3;
+    color: #fff;
+    max-width: 600px;
+  }
+
+  .who-tags {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    min-width: 200px;
+  }
+
+  .who-tag {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.8);
+    font-size: 13px;
+    padding: 8px 14px;
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+
+  /* ─── HOW IT WORKS ─── */
+  .how-section {
+    background: #fff;
+  }
+
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0;
+    margin-top: 2.5rem;
+    border: 1px solid var(--light-gray);
+  }
+
+  .step-card {
+    padding: 2rem 1.5rem;
+    border-right: 1px solid var(--light-gray);
+    position: relative;
+  }
+
+  .step-card:last-child { border-right: none; }
+
+  .step-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--light-gray);
+    transition: background 0.3s;
+  }
+
+  .step-card:hover::before {
+    background: var(--gold);
+  }
+
+  .step-number {
+    font-family: var(--font);
+    font-size: 11px;
+    font-weight: normal;
+    color: var(--text-muted);
+    letter-spacing: 0.12em;
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .step-title {
+    font-family: var(--font-sans);
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--navy);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.6rem;
+  }
+
+  .step-desc {
+    font-size: 14px;
+    color: var(--text-mid);
+    line-height: 1.6;
+  }
+
+  /* ─── OFFER ─── */
+  .offer-section {
+    background: var(--off-white);
+    border-top: 1px solid var(--light-gray);
+  }
+
+  .offer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.25rem;
+    margin-top: 2.5rem;
+  }
+
+  .offer-card {
+    background: #fff;
+    border: 1px solid var(--light-gray);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .offer-card-label {
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .offer-card h3 {
+    font-family: var(--font);
+    font-size: 1.3rem;
+    font-weight: normal;
+    color: var(--navy);
+    line-height: 1.25;
+  }
+
+  .offer-card p {
+    font-size: 14.5px;
+    color: var(--text-mid);
+    line-height: 1.65;
+    flex: 1;
+  }
+
+  .offer-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--blue);
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    margin-top: auto;
+    padding-top: 0.25rem;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s, color 0.2s;
+    width: fit-content;
+  }
+
+  .offer-link:hover {
+    color: var(--navy);
+    border-bottom-color: var(--navy);
+  }
+
+  .offer-link svg {
+    width: 14px;
+    height: 14px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    flex-shrink: 0;
+  }
+
+  .offer-card-primary {
+    border-top: 3px solid var(--blue);
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--navy);
+    color: rgba(255,255,255,0.5);
+    padding: 2rem;
+    text-align: center;
+    font-size: 13px;
+  }
+
+  footer a {
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  footer a:hover { color: #fff; }
+
+  .footer-inner {
+    max-width: 980px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  /* ─── DIVIDER ─── */
+  .rule {
+    width: 40px;
+    height: 2px;
+    background: var(--gold);
+    margin: 1.25rem 0 2rem;
+  }
+
+  /* ─── MOBILE ─── */
+  @media (max-width: 700px) {
+    nav { padding: 0 1.25rem; }
+    .nav-links { display: none; }
+    section { padding: 3.5rem 1.25rem; }
+    .hero { padding: 4rem 1.25rem 3.5rem; }
+    .what-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+    .who-inner { grid-template-columns: 1fr; gap: 1.75rem; }
+    .who-tags { flex-direction: row; flex-wrap: wrap; }
+    .steps-grid { grid-template-columns: 1fr; }
+    .step-card { border-right: none; border-bottom: 1px solid var(--light-gray); }
+    .step-card:last-child { border-bottom: none; }
+    .footer-inner { flex-direction: column; text-align: center; }
+  }
+
+  @media (max-width: 480px) {
+    .problem-grid { grid-template-columns: 1fr; }
+    .offer-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-brand">Correx Systems</a>
+  <ul class="nav-links">
+    <li><a href="#problem">The Problem</a></li>
+    <li><a href="#what-we-do">What We Do</a></li>
+    <li><a href="#how-it-works">How It Works</a></li>
+    <li><a href="#get-started" class="nav-cta">Get Started</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <p class="hero-eyebrow">Commission Reconciliation — Insurance Brokerages</p>
+  <h1 class="hero-statement">When brokerages grow through acquisition, <em>the commission process is usually the first thing to break.</em></h1>
+  <p class="hero-tagline">Commission reconciliation for brokerages managing growth</p>
+  <div class="hero-actions">
+    <a href="#PLACEHOLDER_URL" class="btn-primary">Take the Self-Assessment</a>
+    <a href="#how-it-works" class="btn-ghost">How It Works</a>
+  </div>
+</section>
+
+<!-- THE PROBLEM -->
+<section class="problem-section" id="problem">
+  <div class="section-inner">
+    <span class="section-label">The Problem</span>
+    <h2 class="section-heading">Growth exposes what was never designed.</h2>
+    <div class="rule"></div>
+    <p class="section-intro">Commission systems at most insurance brokerages were built for one firm, one structure, and one person who understood how it worked. Acquisition changes all three — and the errors that follow are rarely visible until they've already cost you.</p>
+
+    <div class="problem-grid">
+      <div class="problem-card">
+        <div class="problem-card-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        </div>
+        <h3>Key person dependency</h3>
+        <p>The calculation logic lives in one person's memory and one spreadsheet they built. When they leave — or when you acquire a firm where that person already left — the process stops. The institutional knowledge is gone with them.</p>
+      </div>
+
+      <div class="problem-card">
+        <div class="problem-card-icon">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+        </div>
+        <h3>Incompatible spreadsheets</h3>
+        <p>Every acquired firm arrives with its own calculation logic, its own exceptions, and its own undocumented rules. Merging them into a single reliable process requires more than copying tabs — it requires understanding what each one was actually doing.</p>
+      </div>
+
+      <div class="problem-card">
+        <div class="problem-card-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        </div>
+        <h3>No single source of truth</h3>
+        <p>The CRM says one thing. The AMS says another. The spreadsheet is a third interpretation. After an acquisition, you may be reconciling three or four systems that were never designed to talk to each other — manually, every month.</p>
+      </div>
+
+      <div class="problem-card">
+        <div class="problem-card-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M12 8v4l3 3"/></svg>
+        </div>
+        <h3>Errors that don't surface</h3>
+        <p>Overpayments don't generate calls. Split miscalculations compound across cycles. Chargebacks sit unprocessed for months. The discrepancies accumulate silently — until a reconciliation finds them, or an agent does first.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT WE DO -->
+<section class="what-section" id="what-we-do">
+  <div class="section-inner">
+    <div class="what-inner">
+      <div class="what-copy">
+        <span class="section-label">What We Do</span>
+        <h2 class="section-heading">A structured audit that finds what the current process can't see.</h2>
+        <div class="rule"></div>
+        <p>Correx Systems conducts fixed-scope commission process audits for mid-sized insurance brokerages. The engagement is document and email based, runs 30 days from receipt of materials, and produces a written report with every finding quantified in dollars.</p>
+        <p>The report names what your current process is getting wrong, what it's costing you, and what a corrected system structure looks like. It is not a software recommendation. It is a diagnosis of your specific process, based on your data and your transaction volume — written to give your CFO, your operations lead, and your leadership team a clear picture of the exposure and a defined path to correct it.</p>
+        <p>The founder brings 10+ years of accounting and financial operations experience, including direct work inside the commission processes of insurance brokerages navigating exactly this kind of structural transition.</p>
+      </div>
+
+      <div class="what-highlights">
+        <div class="highlight-item">
+          <span class="highlight-num">30</span>
+          <div class="highlight-text">
+            <strong>Day engagement</strong>
+            Document and email based. No recurring meetings or retainer.
+          </div>
+        </div>
+        <div class="highlight-item">
+          <span class="highlight-num">10</span>
+          <div class="highlight-text">
+            <strong>Structural failure points</strong>
+            Every audit examines all ten common failure modes in brokerage commission systems.
+          </div>
+        </div>
+        <div class="highlight-item">
+          <span class="highlight-num">1</span>
+          <div class="highlight-text">
+            <strong>Written report delivered</strong>
+            Findings quantified, prioritized, and presented with a corrected system framework.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHO IT'S FOR -->
+<section class="who-section" id="who">
+  <div class="who-inner">
+    <div>
+      <span class="who-label">Who It's For</span>
+      <p class="who-statement">Mid-sized insurance brokerages — 50 to 500 employees — navigating acquisition, M&amp;A activity, or rapid organic growth that has outpaced the commission process built to support it.</p>
+    </div>
+    <div class="who-tags">
+      <span class="who-tag">50–500 employees</span>
+      <span class="who-tag">Post-acquisition integration</span>
+      <span class="who-tag">Multi-entity brokerages</span>
+      <span class="who-tag">Rapid growth firms</span>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-section" id="how-it-works">
+  <div class="section-inner">
+    <span class="section-label">How It Works</span>
+    <h2 class="section-heading">A defined process. A fixed timeline. A written result.</h2>
+    <div class="rule"></div>
+    <p class="section-intro">Every engagement follows the same structure. No open-ended consulting, no scope creep, no recurring retainer. You know what you're getting before the engagement begins.</p>
+
+    <div class="steps-grid">
+      <div class="step-card">
+        <span class="step-number">Step 01</span>
+        <div class="step-title">Self-Assessment</div>
+        <p class="step-desc">Complete a 12-question diagnostic that scores your commission system across all ten structural failure points. This is the starting point for every engagement — and useful on its own.</p>
+      </div>
+
+      <div class="step-card">
+        <span class="step-number">Step 02</span>
+        <div class="step-title">Discovery Call</div>
+        <p class="step-desc">A single structured conversation to review your self-assessment results, discuss your firm's specific situation, and confirm that the audit is the right next step.</p>
+      </div>
+
+      <div class="step-card">
+        <span class="step-number">Step 03</span>
+        <div class="step-title">Engagement Letter</div>
+        <p class="step-desc">Fixed scope, fixed fee, defined deliverables. You receive the engagement letter and an invoice before any work begins. No surprises.</p>
+      </div>
+
+      <div class="step-card">
+        <span class="step-number">Step 04</span>
+        <div class="step-title">Document Gathering</div>
+        <p class="step-desc">You provide commission records, calculation files, carrier statements, and compensation documentation. All information is handled via secure transfer and kept strictly confidential.</p>
+      </div>
+
+      <div class="step-card">
+        <span class="step-number">Step 05</span>
+        <div class="step-title">30-Day Audit</div>
+        <p class="step-desc">The audit examines all ten structural failure points against your actual data. Discrepancies are traced to root cause. Exposure is calculated. The process runs on your timeline with minimal burden on your team.</p>
+      </div>
+
+      <div class="step-card">
+        <span class="step-number">Step 06</span>
+        <div class="step-title">Report &amp; Presentation</div>
+        <p class="step-desc">You receive a written Operational Cost Report with every finding quantified, prioritized, and accompanied by a corrected system framework. The report is delivered with a recorded video walkthrough.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THE OFFER / GET STARTED -->
+<section class="offer-section" id="get-started">
+  <div class="section-inner">
+    <span class="section-label">Get Started</span>
+    <h2 class="section-heading">Three ways to engage.</h2>
+    <div class="rule"></div>
+
+    <div class="offer-grid">
+      <div class="offer-card offer-card-primary">
+        <span class="offer-card-label">Recommended first step</span>
+        <h3>Take the self-assessment</h3>
+        <p>A 12-question diagnostic that scores your commission system across all ten structural failure points. Takes under ten minutes. The result tells you how serious the exposure is and whether a full audit makes sense.</p>
+        <a href="#PLACEHOLDER_URL" class="offer-link">
+          Start the assessment
+          <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+
+      <div class="offer-card">
+        <span class="offer-card-label">Read the research</span>
+        <h3>Commission Clarity on Substack</h3>
+        <p>A publication on the structural failures that drive commission inaccuracy at insurance brokerages — written for finance directors, operations leads, and CFOs who want to understand the problem before they decide what to do about it.</p>
+        <a href="https://commissionclarity.substack.com" class="offer-link" target="_blank" rel="noopener">
+          Read Commission Clarity
+          <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+
+      <div class="offer-card">
+        <span class="offer-card-label">Contact directly</span>
+        <h3>Have a question first?</h3>
+        <p>If you'd like to ask a question before completing the assessment or scheduling a call, reach out directly. Engagements are accepted on a limited basis and every inquiry receives a personal response.</p>
+        <a href="mailto:denise@correxsystems.com" class="offer-link">
+          denise@correxsystems.com
+          <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <span>© 2025 Correx Systems · correxsystems.com</span>
+    <span><a href="mailto:denise@correxsystems.com">denise@correxsystems.com</a></span>
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const id = a.getAttribute('href').slice(1);
+      if (!id) return;
+      const el = document.getElementById(id);
+      if (el) {
+        e.preventDefault();
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
